@@ -1,4 +1,2 @@
-.vscode/configurationCache.log
-.vscode/dryrun.log
-.vscode/settings.json
-.vscode/targets.log
+# ignore vscode folder
+.vscode/
