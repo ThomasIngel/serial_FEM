@@ -112,14 +112,12 @@ index sed_buildS(mesh *M, sed *T)
 
   nT = M->nelem; nC = M->ncoord; Coord = M->coord; Elem = M->elem; 
   n = T->n ; Ti = T->i ; 
-  
   if (!(T->x)) Tx = T->x = calloc( Ti[n] , sizeof (double)) ;
   if (!Tx) return(0);
-  
   for ( k = 0 ; k < nT; k++)
   {
     for (j = 0 ; j < 3 ; j++) ind[j] =      Elem[7*k+j];                                   
-    for (j = 3 ; j < 6 ; j++) ind[j] = nC + Elem[7*k+j];  
+    for (j = 3 ; j < 6 ; j++) ind[j] = nC + Elem[7*k+j];
     stima_laplace3(Coord+2*ind[0],Coord+2*ind[1],Coord+2*ind[2],
                    Elem[7*k+7],dx,ax);
     for (j = 0 ; j < 6 ; j++) Tx[ind[j]] += dx[j];

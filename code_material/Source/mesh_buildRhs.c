@@ -1,4 +1,5 @@
 #include "hpc.h"
+#include <math.h>
 void mesh_Neumann(double p1[2], double p2[2], 
                   index typ, double (*fc)(double *, index), double m[3])  
 {
