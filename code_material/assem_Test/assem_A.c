@@ -24,7 +24,9 @@ double u_D( double x[2])
 int main() {
 	mesh *H;
 	mesh *H1;
+	mesh *H2;
 	sed *A;
+	sed *B;
 	char *fname = "../Problem/problem1";
 	
 	H = mesh_load(fname);
@@ -36,14 +38,49 @@ int main() {
 	H1->fixed = mesh_getFixed(H1->ncoord, H1->bdry, H1->nbdry, &H1->nfixed);
 	
 	A = sed_nz_pattern(H1);
-	sed_buildS(H1, A);
+	B = sed_nz_pattern(H1);
+	mesh_stima_global(H1, A);
+	sed_buildS(H1, B);
 	
 	
-	int n = A->n;
+	
+	
+	size_t n = A->n;
     double* x = calloc (n, sizeof(double));       /* get workspace for sol*/
     double* w = calloc (n, sizeof(double));       /* get temporary workspace */
     double* b = calloc (n, sizeof(double));       /* get workspace for rhs*/
     mesh_buildRhs(H1, b, F_vol, g_Neu); /* build rhs (volume and Neumann data */
+    
+    sed_print(A, 0);
+    sed_print(B, 0);
+    
+    
+    /*double ones[n];
+    double b1[n];
+    double b2[n];
+   	
+   	for (size_t i = 0; i < n; ++i) {
+   		ones[i] = 1;
+   		b1[i] = 0;
+   		b2[i] =0;
+   	}
+   	
+   	sed_gaxpy(A, ones, b1);
+   	sed_gaxpy(B, ones, b2);
+   	
+   	double err1 = 0.0;
+   	double tmp;
+   	for (size_t i = 0; i < n; ++i) {
+   		tmp = abs(b1[i] - b2[i]);
+   		if (tmp > err1) {
+   			err1 = tmp;
+   		}
+   	}
+   	printf("err = %10g\n", err1);
+   	*/
+   	
+    
+    
     
     /* incorporate Dirichlet data */
     index ncoord = H1->ncoord; 
