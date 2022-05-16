@@ -62,6 +62,7 @@ index mesh_print (const mesh *M, index brief);
 mesh *mesh_refine(mesh *In);
 index mesh_getEdge2no(const index nElem, const index *Elem, 
                       index *nEdges, index **edge2no);
+index mesh_stima_global(mesh *M, sed *T);
 
 
 
@@ -81,6 +82,7 @@ index hpc_mg(sed **A, double *b, double *x, double tol, index maxit,
 index hpc_mg_cycle(sed **A, mesh **H, index nLevel, 
                    double **b, double **x, double **r,
                    index pre, index post, index gamma);
+                   
 
 void hpc_rest(double *x, index *edgeno, index nEdges, double *y, index ny);
 void hpc_prol(double *x, index nx, index *edgeno, index nEdges, double *y);
