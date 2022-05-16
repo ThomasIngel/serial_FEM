@@ -58,7 +58,8 @@ HPC = \
  mesh_print.o  \
  mesh_refine.o  \
  mesh_getFixed.o  \
- mesh_util.o  
+ mesh_util.o  \
+ mesh_stima_global.o
 
 
 $(HPC): ../Include/hpc.h Makefile
