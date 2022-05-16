@@ -32,10 +32,16 @@ typedef struct mesh_data  /* mesh */
     index nbdry ;     /* number of boundary elements  */
     index nfixed;     /* number of fixed nodes ????    */
     double *coord ;   /* coordinates (x1,y1,x2,y2, ... ,x_ncoord,y_ncoord) */
-    index *elem ;     /* elements ([e1,e2,e3,m1,m2,m3,t1], ... ) */
-    index *edge2no ;  /*  */
-    index *bdry ;     /* bdry ([e1,e2,m1,t1], [e3,e4,m2,t2], ...) */
-    index *fixed ;    /* bdry ([e1,e2,m1,t1], [e3,e4,m2,t2], ...) */
+    index *elem ;     /* elements ([e1,e2,e3,m1,m2,m3,t1], ... ), 
+    	ei := Knotenindex, mi := Kantenindex*/
+    index *edge2no ;  /* vector of length 2*nedges with start/endpoint for each edge
+    	(start1,end1,start2,end2...)*/
+    index *bdry ;     /* bdry ([e1,e2,m1,t1], [e3,e4,m2,t2], ...),
+    	t1 = 0 if fixed */
+    index *fixed ;    /* bdry ([e1,e2,m1,t1], [e3,e4,m2,t2], ...) FALSCH*/
+    	/* fixed ist Vektor (length nfixed), wo erst Indizes von fixed Knoten, 
+    	dann von fixed Kanten kommen. Kanten nicht direkt Index, sondern 
+    	Index+ncoords */
 } mesh ;
 
 /* utilities */
@@ -62,6 +68,7 @@ index mesh_print (const mesh *M, index brief);
 mesh *mesh_refine(mesh *In);
 index mesh_getEdge2no(const index nElem, const index *Elem, 
                       index *nEdges, index **edge2no);
+mesh *get_refined_mesh(int norefine);
 index mesh_stima_global(mesh *M, sed *T);
 
 
