@@ -6,9 +6,8 @@ mesh *get_refined_mesh(int norefine){
     // Load and initialize Mesh
     mesh **M;
     M = malloc ( (norefine+1) * sizeof(mesh));
-    char *fname = "../Problem/problem1";
-    
-    M[0] = mesh_load (fname);              
+    char *fname = "../code_material/Problem/problem1";
+    M[0] = mesh_load(fname);   
     mesh_getEdge2no(M[0]->nelem, M[0]->elem, &M[0]->nedges, &M[0]->edge2no);
     M[0]->fixed = mesh_getFixed(M[0]->ncoord, M[0]->bdry, M[0]->nbdry, &M[0]->nfixed);
     
