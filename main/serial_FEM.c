@@ -22,22 +22,41 @@ double u_D( double x[2])
   return ( x[0] * x[1] );
 }
 
+double vec1_norm(const double* x, const double* y, const size_t n){
+    double err = 0.0;
+    double tmp;
+    for (size_t i = 0; i < n; ++i){
+        tmp = abs(x[i] - y[i]);
+        if (err < tmp){
+            err = tmp;
+	}
+    }
+}
+
 int main() {
 	// inital mesh
     mesh* H = get_refined_mesh(1);
-    printf("loading done");
     sed* A = sed_nz_pattern(H);
     sed* B = sed_nz_pattern(H);
     
-    // construct my stiffnes matrix and print it
+    // construct my stiffnes matrix and the reference one
     mesh_stima_global(H, A);
-    sed_print(A, 0);
-    
-    // construct stiffnes matrix from the material and print it
     sed_buildS(H, B);
-    sed_print(B, 0);
     
-    // TODO: Construct RHS
+    size_t n = A->n;
+    // my RHS and the reference one
+    double* b1 = calloc(n, sizeof(double));
+    double* b2 = calloc(n, sizeof(double));
+    
+    mesh_RHS(H, b1, F_vol, g_Neu);
+    mesh_buildRhs(H, b2, F_vol, g_Neu);
+
+    // check matrix and RHS
+    double err_A = vec1_norm(A->x, B->x, A->nzmax);
+    printf("Error of matrix is %10g\n", err_A);
+
+    double err_b = vec1_norm(b1, b2, n);
+    printf("Error of RHS is %10g\n", err_b);
     
     // TODO: Solve LSE
 }

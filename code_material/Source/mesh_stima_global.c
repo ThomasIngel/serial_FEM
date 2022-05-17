@@ -43,7 +43,8 @@ void stima_local(const double p1[2], const double p2[2], const double p3[2],
 	
 	// calculate scaling factor from coefficient in front of the lapalace 
 	// opertor and the area of the element
-	double fac = (kappa(p1,typ) + kappa(p2,typ) + kappa(p3,typ)) / (6 * det_B);
+	double fac = (kappa(p1,typ) + kappa(p2,typ) + kappa(p3,typ)) / 
+		(6.0 * det_B);
 	
 	// fill the diagonal and offdiagonal entrys with the reduced computations 
 	// from the lecture

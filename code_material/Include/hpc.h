@@ -70,9 +70,18 @@ index mesh_getEdge2no(const index nElem, const index *Elem,
                       index *nEdges, index **edge2no);
 mesh *get_refined_mesh(int norefine);
 index mesh_stima_global(mesh *M, sed *T);
+void mesh_RHS(const mesh* M, double* b, const double (*fV)(double *, index), 
+  const double (*fN)(double *, index));
 
-
-
+// usefull functions for lib and stima
+void get_indices_and_points(const index* Elem, const index nc, 
+							const double* Coord, size_t ind[6], double p1[2], 
+							double p2[2], double p3[2]);
+							
+void calc_trans_matrix(const double p1[2], const double p2[2],
+					   const double p3[2], double d[2][2]);
+					   
+double det_trans_matrix(const double d[2][2]);
 
 void stima_laplace3(double p1[2], double p2[2], double p3[2],
                     index  typ, double dx[6], double ax[9]);
