@@ -84,7 +84,7 @@ void mesh_buildRhs(const mesh *M, double *b, double (*fV)(double *, index),
       for (j = 0 ; j < 2 ; j++) ind[j] =      Bdry[4*k+j];                                   
       ind[2] = nC + Bdry[4*k+2];  
       mesh_Neumann(Coord+2*ind[0],Coord+2*ind[1],Bdry[4*k+3],fN,bx);
-      for (j = 0 ; j < 3 ; j++) b[ind[j]] += bx[j];  
+      for (j = 0 ; j < 3 ; j++) b[ind[j]] += bx[j];
     }
   }                    
 }

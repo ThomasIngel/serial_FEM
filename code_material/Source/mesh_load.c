@@ -5,7 +5,7 @@ index *mesh_load_index (char *fname, index cols, index *rows)
 {
   FILE *file;
   index cnt, j, a, *data;
-          
+  
   file = fopen(fname,"r");
   if (file == NULL) return (NULL) ;
   cnt = 0;
