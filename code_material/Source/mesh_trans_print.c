@@ -47,7 +47,7 @@ for(size_t i=0;i<metra[domain]->n_cross_glob;i++){
 }
 printf("\nbool (1 = black, 0 = red) = %d", metra[domain]->black);
 
-printf("\n------------------------\nn");
+printf("\n------------------------\n\n");
 
 return;
 }
