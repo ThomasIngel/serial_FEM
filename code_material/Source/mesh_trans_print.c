@@ -9,7 +9,7 @@ printf("\nncoord_glob (# Koordinaten global) = %td", metra[domain]->ncoord_glo);
 printf("\nncoord_loc (# Koordinaten lokal) = %td", metra[domain]->ncoord_loc);
 printf("\nnelem_loc (# Elemente lokal) = %td", metra[domain]->nelem_loc);
 printf("\nnbdry_loc (# Gebietsrandpunkte im Gebiet) = %td", metra[domain]->nbdry_loc);
-printf("\n\ncoords_loc: Lokale Koordinaten:\n");
+printf("\n\ncoords_loc: Lokale Koordinaten (crosspoints (immer 4), edge nodes, interior nodes):\n");
 double* coords_loc = metra[domain]->domcoord;
 for (size_t i=0;i<metra[domain]->ncoord_loc;i++){
    printf ("    (%lg,  %lg)\n", coords_loc[2*i], coords_loc[2*i+1] );
@@ -27,8 +27,8 @@ for(size_t i=0;i<metra[domain]->ncoord_loc;i++){
   printf("%td\n",metra[domain]->c[i]);
 }
 printf("\nnedgenodes (# Crosspoint+Edge Knoten = ) = %td", metra[domain]->nedgenodes);
-printf("\nnfixed_loc (# Gebietsrandpunkte in Domain) = %td", metra[domain]->nfixed_loc);
-printf("\n\nfixed_loc: Lokale Knotennummern auf Gebietsrand:\n");
+printf("\nnfixed_loc (# Fixed Gebietsrandpunkte in Domain) = %td", metra[domain]->nfixed_loc);
+printf("\n\nfixed_loc: Lokale fixed Knotennummern auf Gebietsrand:\n");
 for(size_t i=0;i<metra[domain]->nfixed_loc;i++){
   printf("%td\n",metra[domain]->fixed_loc[i]);
 }
