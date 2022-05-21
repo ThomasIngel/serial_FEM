@@ -14,7 +14,7 @@
 #       cd ../Demo ; make
 #
 
-CC = gcc
+CC = mpicc
 
 LIBRARY = libhpc
 
@@ -65,7 +65,8 @@ HPC = \
  mesh_trans_aux.o \
  mesh_trans_util.o \
  mesh_trans_print.o \
- sed_sm_build.o
+ sed_sm_build.o \
+ mpi_scatter_mesh.o
 
 
 $(HPC): ../Include/hpc.h Makefile

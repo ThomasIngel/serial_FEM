@@ -1,6 +1,7 @@
 #ifndef _MESH_TRANS_H
 #define _MESH_TRANS_H
 
+#include <mpi.h>
 #include "hpc.h"
 #include <math.h>
 #include <stdlib.h>
@@ -88,7 +89,7 @@ sed *sed_sm_pattern(mesh_trans *mesh_loc);
 void sed_sm_element(double p1[2], double p2[2], double p3[2], double dx[3], double ax[3]);
 sed *sed_sm_build(mesh_trans *mesh_loc);
 
-
+mesh_trans* scatter_meshes(mesh_trans** global_mesh,MPI_Comm comm,index domains, index dof);
 
 
 
