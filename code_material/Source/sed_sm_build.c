@@ -7,15 +7,16 @@
  */
 
 #include "hpc.h"
+#include "mesh_trans.h"
 
 /**
  * Funktion zur Berechnung des SED Matrix Speicherlayouts.
  *
- * @param[in] mesh_loc	Gitter des lokalen Teilgebiets als mesh_transfer struct.
+ * @param[in] mesh_loc	Gitter des lokalen Teilgebiets als mesh_trans struct.
  *
  * @return Zurückgeben einer allokierten SED Matrix.
  */
-sed *sed_sm_pattern(mesh_transfer *mesh_loc)
+sed *sed_sm_pattern(mesh_trans *mesh_loc)
 {
 	// Verschiedene Variablen und Zeiger für die Berechnungen
 	index k, j, n, p, nC, nT, nE, nz, *Elem, ind[3], *Si, *w, imin, imax;
@@ -24,10 +25,10 @@ sed *sed_sm_pattern(mesh_transfer *mesh_loc)
 	// Indizes in x und y Richtung wie die Steifigkeitsmatrix für ein Element ausschaut
 	static int ai[3] = {0, 0, 1}, aj[9] = {1, 2, 2};
 
-	// Auslesen der Daten vom mesh_transfer Objekt
+	// Auslesen der Daten vom mesh_trans Objekt
 	nT = mesh_loc->nelem_loc;
 	nC = mesh_loc->ncoord_loc;
-	Elem = mesh_loc->elem;
+	Elem = mesh_loc->domelem;
 
 	// get structure of sparse matrix
 	n = nC; // Dimension der Steifigkeitsmatrix
@@ -125,11 +126,11 @@ void sed_sm_element(double p1[2], double p2[2], double p3[2], double dx[3], doub
 /**
  * Funktion zur Berechnung des SED Matrix Speicherlayouts.
  *
- * @param mesh_loc  Lokales Gitter als mesh_transfer.
+ * @param mesh_loc  Lokales Gitter als mesh_trans.
  *
  * @return Zurückgeben einer allokierten gefüllten SED Matrix.
  */
-sed *sed_sm_build(mesh_transfer *mesh_loc)
+sed *sed_sm_build(mesh_trans *mesh_loc)
 {
 	// Verschiedene Variablen und Zeiger für die Berechnungen
 	index j, k, n, p, nC, nT, nz, *Elem, ind[3], *Ai, *w, imin, imax;
@@ -143,8 +144,8 @@ sed *sed_sm_build(mesh_transfer *mesh_loc)
 	// Auslesen der Daten vom mesh Objekt
 	nT = mesh_loc->nelem_loc;
 	nC = mesh_loc->ncoord_loc;
-	Coord = mesh_loc->coord;
-	Elem = mesh_loc->elem;
+	Coord = mesh_loc->domcoord;
+	Elem = mesh_loc->domelem;
 
 	// Auslesen der Daten vom sed Objekt und Speicher anlegen für die Matrixwerte
 	A = sed_sm_pattern(mesh_loc);
