@@ -1,4 +1,5 @@
 all: lib parallel
+	- mpirun -np 2 ./parallel
 	
 lib:
 	( cd ../code_material/Lib ; $(MAKE) )

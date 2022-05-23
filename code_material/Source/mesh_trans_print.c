@@ -40,10 +40,12 @@ printf("\nn_single_bdry: n_edgenodes (w.o. crosspoints) of each boundary sorted 
 for(size_t i=0;i<4;i++){
   printf("%td\n",metra[domain]->n_single_bdry[i]);
 }
-printf("\nn_cross_glob (# parweise versch. crosspoints) = %td", metra[domain]->n_cross_glob);
-printf("\n\nc_cross: Ordnet allen crosspoints von allen ranks die globale Knotennummer zu:\n");
-for(size_t i=0;i<metra[domain]->n_cross_glob;i++){
-  printf("%td\n",metra[domain]->c_cross[i]);
+if(domain==0){
+  printf("\nn_cross_glob (# parweise versch. crosspoints) = %td", metra[domain]->n_cross_glob);
+  printf("\n\nc_cross: Ordnet allen crosspoints von allen ranks die globale Knotennummer zu:\n");
+  for(size_t i=0;i<metra[domain]->n_cross_glob;i++){
+    printf("%td\n",metra[domain]->c_cross[i]);
+  }
 }
 printf("\nbool (1 = black, 0 = red) = %d", metra[domain]->black);
 

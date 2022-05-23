@@ -130,11 +130,6 @@ mesh_trans* scatter_meshes(mesh_trans** global_mesh,MPI_Comm comm,
 	    for(size_t i=0;i<req_len;++i){
 		MPI_Wait(&request[i],MPI_STATUS_IGNORE);
 	    }
-		printf("\nProcessor %d  in function:\n", rank);
-		double* coords_loc = global_mesh[0]->domcoord;
-		for (size_t i=0;i<global_mesh[0]->ncoord_loc;i++){
-			printf ("    (%lg,  %lg)\n", coords_loc[2*i], coords_loc[2*i+1] );
-		}
 	    return global_mesh[0];
 	}else{
 	    mesh_trans* local_mesh=alloc_mesh_trans(domains,dof);
@@ -205,11 +200,6 @@ mesh_trans* scatter_meshes(mesh_trans** global_mesh,MPI_Comm comm,
 	    for(size_t i=0;i<numnotuni;++i){
 		MPI_Wait(&request_nu[i],MPI_STATUS_IGNORE);
 	    }
-		printf("\nProcessor %d  in function:\n", rank);
-		double* coords_loc = local_mesh->domcoord;
-		for (size_t i=0;i<local_mesh->ncoord_loc;i++){
-			printf ("    (%lg,  %lg)\n", coords_loc[2*i], coords_loc[2*i+1] );
-		}
 	    return local_mesh;
 	}
 	

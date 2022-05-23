@@ -1,4 +1,5 @@
 #include "hpc.h"
+#include "mesh_trans.h"
 
 /**
  * Funktion zur Berechnung der rechten Seite der Neumann-Randbedingung.
@@ -68,7 +69,7 @@ void rhs_Volumen(double p1[2], double p2[2], double p3[2], index typ,
  * @param[in] fV        Funktion der Volumenkraft f.
  * @param[in] fN        Funktion der Neumann-Randbedingung.
  */
-void mesh_build_rhs(const mesh_transfer *mesh_loc, double *b,
+void mesh_trans_rhs(const mesh_trans *mesh_loc, double *b,
 					double (*fV)(double *, index), double (*fN)(double *, index))
 {
 	// Verschiedene Variablen und Zeiger für die Berechnungen
@@ -78,9 +79,9 @@ void mesh_build_rhs(const mesh_transfer *mesh_loc, double *b,
 	// Auslesen der Daten vom mesh Objekt
 	nT = mesh_loc->nelem_loc;
 	nB = mesh_loc->nbdry_loc;
-	Coord_loc = mesh_loc->coord;
-	Elem_loc = mesh_loc->elem;
-	Bdry_loc = mesh_loc->bdry_loc;
+	Coord_loc = mesh_loc->domcoord;
+	Elem_loc = mesh_loc->domelem;
+	Bdry_loc = mesh_loc->dombdry;
 
 	// Rechte Seite: Volumenkraft f
 	for (k = 0; k < nT; k++) {

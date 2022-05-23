@@ -82,14 +82,18 @@ void prepare_crosspt_comm(mesh_trans** metra, index N);
 void meshsplit(mesh* H, mesh_trans** metra, index anz_dom);
 void mesh_trans_print (mesh_trans** metra, index domain);
 
-void mesh_buildRhs_loc(const mesh_trans *M, double *b, double (*fV)(double *, index),
-                   double (*fN)(double *, index));
+// mesh_buildRhs_loc(const mesh_trans *M, double *b, double (*fV)(double *, index),double (*fN)(double *, index));
 
 sed *sed_sm_pattern(mesh_trans *mesh_loc);
 void sed_sm_element(double p1[2], double p2[2], double p3[2], double dx[3], double ax[3]);
 sed *sed_sm_build(mesh_trans *mesh_loc);
 
 mesh_trans* scatter_meshes(mesh_trans** global_mesh,MPI_Comm comm,index domains, index dof);
+
+void mesh_trans_rhs(const mesh_trans *mesh_loc, double *b,double (*fV)(double *, index), double (*fN)(double *, index));
+void rhs_Volumen(double p1[2], double p2[2], double p3[2], index typ,double (*fc)(double *, index), double b[3]);
+void rhs_Neumann(double p1[2], double p2[2], index typ, double (*fc)(double *, index), double b[2]);
+
 
 
 
