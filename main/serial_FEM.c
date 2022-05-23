@@ -42,11 +42,14 @@ int main() {
     // construct my stiffnes matrix and the reference one
     mesh_stima_global(H, A);
     sed_buildS(H, B);
+    sed_print(A, 0);
+    sed_print(B, 0);
     
     size_t n = A->n;
     // my RHS and the reference one
     double* b1 = calloc(n, sizeof(double));
     double* b2 = calloc(n, sizeof(double));
+    double* u = calloc(n, sizeof(double));
     
     mesh_RHS(H, b1, F_vol, g_Neu);
     mesh_buildRhs(H, b2, F_vol, g_Neu);
@@ -59,4 +62,9 @@ int main() {
     printf("Error of RHS is %10g\n", err_b);
     
     // TODO: Solve LSE
+    cg_seriel(n, A, b1, u, 1e-6);
+    
+    free(b1);
+    free(b2);
+    free(u);
 }
