@@ -67,7 +67,14 @@ HPC = \
  mesh_trans_print.o \
  sed_sm_build.o \
  sed_spmv_adapt.o \
- cg_seriell.o
+ cg_seriell.o \
+ cs_compress.o \
+ cs_entry.o \
+ cs_spmv.o \
+ cs_load.o \
+ cs_print.o \
+ cs_util.o \
+ sed_compress.o
 
 
 $(HPC): ../Include/hpc.h Makefile
