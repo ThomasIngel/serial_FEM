@@ -15,6 +15,18 @@
 
 /* --- primary HPC routines and data structures ------------------------- */
 
+typedef struct cs_sparse /* matrix in compressed-row/col or triplet form */
+{
+    index nzmax ;     /* maximum number of entries */
+    index m ;         /* number of rows */
+    index n ;         /* number of columns */
+    index *p ;        /* col/row pointers (size n+1) or col indices (size nzmax) */
+    index *ind ;      /* row/col indices, size nzmax */
+    double *x ;       /* numerical values, size nzmax */
+    index nz ;        /* # of entries in triplet matrix, 
+                       * -1 for compressed-col, -2 for compressed-row */
+} cs ;
+
 
 typedef struct sed_sparse  /* matrix in sparse matrix in compressed col. */
 {                          /* with extracted diagonal storage form      */
@@ -44,6 +56,19 @@ typedef struct mesh_data  /* mesh */
     	Index+ncoords */
 } mesh ;
 
+/* cs format */
+cs *cs_alloc (index m, index n, index nzmax, index values, index typ);
+index cs_realloc (cs *A, index nzmax);
+cs *cs_free (cs *A);
+cs *cs_done (cs *C, void *w, void *x, index ok);
+index cs_spmv (const cs *A, const double *x, double *y, double alpha, 
+	double beta);
+
+cs *cs_load (FILE *f, index issym); 
+index cs_entry (cs *T, index i, index j, double x);
+index cs_print (const cs *A, index brief);
+cs *cs_compress (const cs *T, index typ);
+
 /* utilities */
 void *hpc_realloc (void *p, index n, size_t size, index *ok);
 double hpc_cumsum (index *p, index *c, index n);
@@ -52,7 +77,7 @@ sed *sed_alloc (index n, index nzmax, index values);
 index sed_realloc (sed *A, index nzmax);
 sed *sed_free (sed *A);
 sed *sed_done (sed *C, void *w, void *x, index ok);
-// sed *sed_compress (const cs *A);
+sed *sed_compress (const cs *A);
 index sed_print (const sed *A, index brief);
 index sed_gaxpy (const sed *A, const double *x, double *y);
 index sed_dupl (sed *A);
