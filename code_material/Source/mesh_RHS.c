@@ -88,7 +88,7 @@ void mesh_vol_ti(const double p1[2], const double p2[2], const double p3[2],
 	mesh_vol_elem_ti(p2, m2, m1, typ, fc, s);
 	b[1] = s[0];
 	b[4] = s[1];
-	b[3] += s[3];
+	b[3] += s[2];
 	
 	mesh_vol_elem_ti(p3, m3, m2, typ, fc, s);
 	b[2] = s[0];
