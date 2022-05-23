@@ -7,7 +7,6 @@
 #include <stdlib.h>
 
 #include "hpc.h"
-#include "blas_level1.h"
 
 void
 cg_seriel(size_t n,
@@ -62,5 +61,6 @@ cg_seriel(size_t n,
                 sigma = sigma_neu;
                 free(ad);
               //printf("k = %d \t norm = %10g\n", k, sqrt(sigma));
+              if (k == 100) break;
         } while (sqrt(sigma) > tol);
 }
