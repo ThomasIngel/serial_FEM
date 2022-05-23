@@ -104,6 +104,10 @@ void hpc_rest(double *x, index *edgeno, index nEdges, double *y, index ny);
 void hpc_prol(double *x, index nx, index *edgeno, index nEdges, double *y);
 void hpc_prol_quad(double *x, double *y, index *elem, index nC, index nT, index nE);
 
+// functions for cg
+index sed_spmv_adapt(const sed* A, const double* x, double* y, double alpha);
+void cg_seriel(size_t n, const sed* A, const double* b, double* u, double tol);
+
 
 double kappa( double x[2], index typ );
 double F_vol( double x[2], index typ );
