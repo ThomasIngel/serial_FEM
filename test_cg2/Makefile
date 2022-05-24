@@ -1,5 +1,5 @@
 all: lib test_cg
-	- ./test_cg < ./t_neu.txt
+	- ./test_cg
 	
 lib:
 	( cd ../code_material/Lib ; $(MAKE) )

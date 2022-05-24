@@ -1,26 +1,25 @@
 // cg_seriell Version2
 
-#include <math.h>
-#include <stdio.h>
-#include <stddef.h>
-#include <stdbool.h>
-#include <stdlib.h>
-
 #include "hpc.h"
+#include "blas_level1.h"
 
 void
-cg_seriel(size_t n,
+cg_seriell(size_t n,
            const sed *A, const double *b, double *u, double tol) {
         // A   - stiffness matrix (sed Format!)
         // b   - righthand side
         // u   - inital guess for solution
         // tol - Toleranz (stopping criteria)
 
+		//double* zeros = calloc(n, sizeof(double));
         double r[n];
         blasl1_dcopy(b,r,(index) n,1.);         //kopiert b in r (also r=b)
 
         // r = b - A*u    r = r-A*b
         sed_spmv_adapt(A,u,r,-1.0);             //Ergebnis steht in r
+        
+        //sed_gaxpy(A, u, zeros);
+        //blasl1_daxpy(r, zeros, (index) n, -1.0, 1.0);
 
         // sigma = r'*r (Skalarprodukt)
         double sigma_0 = blasl1_ddot(r,r,n);
@@ -40,6 +39,8 @@ cg_seriel(size_t n,
                         exit(0);
                 }
                 sed_spmv_adapt(A,d,ad,1.);
+                
+                //sed_gaxpy(A, d, ad);
 
                 // alpha = sigma/(d*ad)
                 double dad = blasl1_ddot(d,ad,n);
@@ -60,7 +61,7 @@ cg_seriel(size_t n,
                 // sigma = sigma_neu
                 sigma = sigma_neu;
                 free(ad);
-              //printf("k = %d \t norm = %10g\n", k, sqrt(sigma));
-              if (k == 100) break;
+              printf("k = %d \t norm = %10g\n", k, sqrt(sigma));
         } while (sqrt(sigma) > tol);
+        //free(zeros);
 }

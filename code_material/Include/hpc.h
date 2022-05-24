@@ -131,7 +131,7 @@ void hpc_prol_quad(double *x, double *y, index *elem, index nC, index nT, index 
 
 // functions for cg
 index sed_spmv_adapt(const sed* A, const double* x, double* y, double alpha);
-void cg_seriel(size_t n, const sed* A, const double* b, double* u, double tol);
+void cg_seriell(size_t n, const sed* A, const double* b, double* u, double tol);
 
 
 double kappa( double x[2], index typ );

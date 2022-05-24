@@ -13,14 +13,14 @@ double F_vol( double x[2], index typ )
 
 double g_Neu( double x[2], index typ )
 {
-	//return 0.0;
-  return ( x[0] * x[1] );
+	return 0.0;
+  //return ( x[0] * x[1] );
 }
 
 double u_D( double x[2])
 {
-//  return ( 0.0 );
-  return ( x[0] * x[1] );
+  return ( 0.0 );
+  //return ( x[0] * x[1] );
 }
 
 double vec1_norm(const double* x, const double* y, const size_t n){
@@ -80,20 +80,11 @@ int main() {
 
     double err_b = vec1_norm(b1, b2, n);
     printf("Error of RHS is %10g\n", err_b);
-    
-    double* y1 = calloc(n, sizeof(double));
-    double* y2 = calloc(n, sizeof(double));
-	sed_spmv_adapt(A, b1, y1, 1.0);	
-	sed_gaxpy(B, b2, y2);
 	
-	double err_spmv = vec1_norm(y1, y2, n);
-	printf("err spmv = %10g\n", err_spmv);
     // TODO: Solve LSE
-    cg_seriel(n, B, b2, u, 1e-6);
+    cg_seriell(n, A, b1, u, 1e-6);
     
     free(b1);
     free(b2);
     free(u);
-    free(y1);
-    free(y2);
 }
