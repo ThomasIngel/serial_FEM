@@ -11,35 +11,43 @@ void print_vec(double* x, size_t n){
 
 int
 main (void) {
-    cs *T;
-    sed *S ;
+	// problem parameters
+	size_t n = 11;
+	double h = (1 / (n - 1)) * (1 / (n - 1));
 
-    T = cs_load (stdin, 1) ;             /* load triplet matrix T from stdin */
-    printf ("---------------------\nT triplet:\n") ;
-    cs_print (T, 0) ;                    /* print T */
+	// initial COO matrix
+	cs* T;
+	double* data = T->x;
+	index* ind_row = T->ind;
+	index* ind_col = T->p;
+	T->nzmax = 2 * n - 1;
+	T->nz = 2 * n - 1;
+	T->m = n;
+	T->n = n;
 
-	S = sed_compress(T) ;                // S = sparse extr. diag. of T
-	printf ("---------------------\nS sparse diag:\n") ;
-	sed_print (S, 0) ;                  // print S
-    
-	int n = 4; 
-	double b[n];
-	b[0] = 10; b[1] = 30; b[2] = 65; b[3] = 119;
-	
-	double u[n];
-	for (size_t i=0; i<n; ++i) {
-		u[i] = 1;
+	// first entrys
+	data[0] = 2 * h;
+	ind_row[0] = 0;
+	ind_col[0] = 0;
+	// last entrys
+	data[nz] = 2 * h;
+	ind_row[nz] = nz;
+	ind_col[nz] = nz;
+
+	for (size_t i = 1; i < n - 1; ++i){
+		// diagonal
+		data[i] = 2 * h;
+		ind_row[i] = i;
+		ind_col[i] = i;
+
+		// subdiagonal
+		data[n+i] = -h;
+		ind_row[n+i] = i + 1;
+		ind_col[n+i] = i;
 	}
 
-	//double tol = 1e-9;	
-
-	cg_seriel(n, S, b, u, 1e-9);
-
-	printf ("---------------------\n\n") ;
-	printf ("TEST TEST TEST\n\n");
-
-	printf("Vector u:\n");
-    print_vec(u, n);
+	sed* S = sed_compress(T);
+	sed_print(S,0);
 
 	cs_free (T) ;                        /* clear T */
 	sed_free (S) ;                       /* clear S */
