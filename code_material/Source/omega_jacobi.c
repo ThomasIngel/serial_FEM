@@ -1,10 +1,9 @@
 // omega Jacobi algorithm
 
 #include "hpc.h"
-#include "blas_level1.h"
 
 void
-cg_seriell(size_t n,
+omega_jacobi(size_t n,
            const sed *A, const double *b, double *u, double omega, double tol) {
         // A     - stiffness matrix (sed Format!)
         // b     - righthand side
