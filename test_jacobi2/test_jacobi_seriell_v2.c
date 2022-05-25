@@ -54,7 +54,7 @@ main (void) {
 	cg_seriell(n, S, b, u, 1e-6);
 	print_vec_double(u,n);
 
-	double omega = 2/3;
+	double omega = 2.0 / 3.0;
 	omega_jacobi(n,S,b,u_jacobi,omega,1e-6);
 	print_vec_double(u_jacobi,n);
 
