@@ -15,8 +15,15 @@ index sed_spmv_adapt (const sed *A, const double *x, double *y, double alpha)
     for (p = Ai[j] ; p < Ai[j+1] ; p++)
     {
       y[Ai[p]] += alpha * Ax[p] * x[j];
-      y[j] += Ax[p] * x[Ai[p]];
+      y[j] += alpha * Ax[p] * x[Ai[p]];
     }
   }
   return (1) ;
+}
+
+double
+ddot_adapt(const double * x, const double * y, size_t len){
+    double res=0;
+    for (size_t i=0; i<len; ++i) res += x[i]*y[i];
+    return res;
 }

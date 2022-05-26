@@ -54,8 +54,10 @@ main (void) {
 	cg_seriell(n, S, b, u, 1e-6);
 	print_vec_double(u,n);
 
+	printf("\n\n----------JACOBI----------\n");
 	double omega = 2.0 / 3.0;
-	omega_jacobi(n,S,b,u_jacobi,omega,1e-6);
+	double tol = 1e-6;
+	omega_jacobi(n,S,b,u_jacobi,omega,tol);
 	print_vec_double(u_jacobi,n);
 
 	cs_free (T) ;                        /* clear T */

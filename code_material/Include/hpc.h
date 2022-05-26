@@ -135,6 +135,7 @@ void cg_seriell(size_t n, const sed* A, const double* b, double* u, double tol);
 
 //w-Jacobi
 void omega_jacobi(size_t n,const sed *A, const double *b, double *u, double omega, double tol);
+double ddot_adapt(const double * x, const double * y, size_t len);
 
 
 double kappa( double x[2], index typ );
