@@ -75,7 +75,8 @@ HPC = \
  cs_print.o \
  cs_util.o \
  sed_compress.o \
- omega_jacobi.o
+ omega_jacobi.o \
+ blas_level1.o
 
 
 $(HPC): ../Include/hpc.h Makefile
