@@ -3,20 +3,41 @@
 #include "hpc.h"
 #include "blas_level1.h"
 
+void inc_dir_res(double* r, const index* dir_ind, const size_t n_dir){
+	for (size_t i = 0; i < n_dir; ++i){
+		r[dir_ind[i]] = 0;
+	}
+}
+
+void inc_dir_u(double* u, const double* dir, const index* dir_ind, 
+  const size_t n_dir){
+	for (size_t i = 0; i < n_dir; ++i){
+		u[dir_ind[i]] = dir[i];
+	}
+}
+
+void print_vec(const double* x, const size_t n){
+	for (size_t i = 0; i < n; ++i){
+		printf("x[%d] = %10g\n", i, x[i]);
+	}
+}
+
 void
-cg_seriell(size_t n,
-           const sed *A, const double *b, double *u, double tol) {
+cg_seriell(const size_t n,
+           const sed *A, const double *b, double *u, const double tol,
+           const double* dir, const index* dir_ind, const size_t n_dir) {
         // A   - stiffness matrix (sed Format!)
         // b   - righthand side
         // u   - inital guess for solution
         // tol - Toleranz (stopping criteria)
 
-		//double* zeros = calloc(n, sizeof(double));
+		inc_dir_u(u, dir, dir_ind, n_dir);
         double r[n];
         blasl1_dcopy(b,r,(index) n,1.);         //kopiert b in r (also r=b)
 
-        // r = b - A*u    r = r-A*b
+        // r = b - A*u    r = r-A*u
         sed_spmv_adapt(A,u,r,-1.0);             //Ergebnis steht in r
+        inc_dir_res(r, dir_ind, n_dir);
         
         //sed_gaxpy(A, u, zeros);
         //blasl1_daxpy(r, zeros, (index) n, -1.0, 1.0);
@@ -48,9 +69,11 @@ cg_seriell(size_t n,
 
                 // Update: u = u + alpha*d
                 blasl1_daxpy(u, d, (index) n, alpha, 1.0);
+                inc_dir_u(u, dir, dir_ind, n_dir);
 
                 // r = r - alpha*ad
                 blasl1_daxpy(r, ad, (index) n, -alpha, 1.0);
+                inc_dir_res(r, dir_ind, n_dir);
 
                 // sigma_neu = r' * r
                 double sigma_neu = blasl1_ddot(r,r,n);
