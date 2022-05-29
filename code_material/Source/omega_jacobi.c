@@ -1,15 +1,21 @@
 // omega Jacobi algorithm
 
 #include "hpc.h"
+#include "blas_level1.h"
 
 void
-omega_jacobi(size_t n,
-           const sed *A, const double *b, double *u, double omega, double tol) {
+omega_jacobi(const size_t n,
+           const sed *A, const double *b, double *u, const double omega, 
+           const double tol, const double* dir, const index* dir_ind, 
+           const size_t n_dir) {
         // A     - stiffness matrix (sed Format!)
         // b     - righthand side
         // u     - inital guess for solution
         // omega - often 2/3
         // tol   - Toleranz (stopping criteria)
+        
+        // incoporate dirichlet bcs at u0
+        inc_dir_u(u, dir, dir_ind, n_dir);
 
         double *Ax = A->x; // data of the matrix A
 
@@ -21,6 +27,7 @@ omega_jacobi(size_t n,
 
         // r = b - A*u , calculating the residuum
         sed_spmv_adapt(A,u,r,-1.0);             //Solution in vector r
+        inc_dir_res(r, dir_ind, n_dir);
 
 
         // sigma = r'*r = sigma_0 , computing the scalarproduct
@@ -36,16 +43,18 @@ omega_jacobi(size_t n,
                 k++;
 
                 // u_k := u_k-1 + omega * diag(A)^-1 * r
-                for(index i =0;i<n;i++){
+                for(index i = 0; i < n; i++){
                         r[i] = r[i] / diag[i]; // compute D^-1 * r and save it in r
                 }
 
                 blasl1_daxpy(u,r,(index) n,omega,1.0); // u <- u + r * omega
+                inc_dir_u(u, dir, dir_ind, n_dir);
 
                 blasl1_dcopy(b,r,(index) n,1.);  //copy b in r (r=b)
 
                 // r = b - A*u , calculating the residuum
                 sed_spmv_adapt(A,u,r,-1.0);
+                inc_dir_res(r, dir_ind, n_dir);
 
                 // sigma = r' * r , computing the scalarproduct with the new residuum
                 // sigma = blasl1_ddot(r,r,(size_t) n);
