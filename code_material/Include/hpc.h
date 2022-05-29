@@ -131,10 +131,14 @@ void hpc_prol_quad(double *x, double *y, index *elem, index nC, index nT, index 
 
 // functions for cg
 index sed_spmv_adapt(const sed* A, const double* x, double* y, double alpha);
-void cg_seriell(size_t n, const sed* A, const double* b, double* u, double tol);
+void cg_seriell(const size_t n,
+		const sed* A, const double* b, double* u, const double tol,
+		const double* dir, const index* dir_ind, const size_t n_dir);
 
 //w-Jacobi
-void omega_jacobi(size_t n,const sed *A, const double *b, double *u, double omega, double tol);
+void omega_jacobi(const size_t n, const sed *A, const double *b, double *u,
+		const double omega, const double tol, const double* dir, 
+		const index* dir_ind, const size_t n_dir);
 double ddot_adapt(const double * x, const double * y, size_t len);
 
 
