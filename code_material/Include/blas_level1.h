@@ -23,14 +23,7 @@
  * @retrun überschreibt Vektor x
  */
 void
-blasl1_dscal(double * x, size_t len, const double alpha){
-    if (alpha ==1) return;
-    if (alpha==0){
-	for (size_t i=0; i<len; ++i) x[i] = 0;
-    } else {
-	for (size_t i=0; i<len; ++i) x[i] *= alpha;
-    }
-}
+blasl1_dscal(double * x, size_t len, const double alpha);
 
 
 /** 
@@ -42,11 +35,7 @@ blasl1_dscal(double * x, size_t len, const double alpha){
  * @retrun skalarprodukt der Vektoren
  */
 double
-blasl1_ddot(const double * x, const double * y, size_t len){
-    double res=0;
-    for (size_t i=0; i<len; ++i) res += x[i]*y[i];
-    return res;
-}
+blasl1_ddot(const double * x, const double * y, size_t len);
 
 /**
  * @brief Vektor-Update x = beta * x + alpha * y
@@ -58,20 +47,7 @@ blasl1_ddot(const double * x, const double * y, size_t len){
  * @param beta 
  */
 void
-blasl1_daxpy(double* x, double* y, index length, double alpha, double beta){
-    //x = beta*x + alpha*y
-    if(beta!=1){
-	for(size_t i=0; i<length; i++){
-	    x[i] = beta*x[i];
-	}
-    }
-
-    if(alpha != 0){
-	for(size_t i=0; i<length; i++){
-	    x[i] += alpha*y[i];
-	}
-    }
-}
+blasl1_daxpy(double* x, double* y, index length, double alpha, double beta);
 // copy Functions
 
 /**
@@ -83,12 +59,7 @@ blasl1_daxpy(double* x, double* y, index length, double alpha, double beta){
  * @param alpha 
  */
 void
-blasl1_dcopy(const double* a, double* b, index length, double alpha){
-    //Kopiert alpha*a in Vektor b
-    for(size_t i=0; i<length; i++){
-	b[i] = alpha* a[i];
-    }
-}
+blasl1_dcopy(const double* a, double* b, index length, double alpha);
 
 /**
  * @brief Index Vektor kopieren b = alpha * a
@@ -99,19 +70,9 @@ blasl1_dcopy(const double* a, double* b, index length, double alpha){
  * @param alpha 
  */
 void
-blasl1_icopy(const index* a, index* b, index length, double alpha){
-    //Kopiert alpha*a in Vektor b
-    for(size_t i=0; i<length; i++){
-	b[i] = alpha* a[i];
-    }
-}
+blasl1_icopy(const index* a, index* b, index length, double alpha);
 
-void blasl1_intcopy(const int* a, int* b, index length, double alpha){
-    //Kopiert alpha*a in Vektor b
-    for(size_t i=0; i<length; i++){
-	b[i] = alpha* a[i];
-    }
-}
+void blasl1_intcopy(const int* a, int* b, index length, double alpha);
 
 // print functions
 
@@ -121,11 +82,7 @@ void blasl1_intcopy(const int* a, int* b, index length, double alpha){
  * @param data Vektor
  * @param len Länge des Vektors
  */
-void blasl1_dprint(double * data, size_t len){
-    for(size_t i=0;i<len;++i){
-	printf("%4.2lf\n",data[i]);
-    }
-}
+void blasl1_dprint(double * data, size_t len);
 
 /**
  * @brief Print index-Vektor, jeder Wert in 1 Zeile
@@ -133,17 +90,9 @@ void blasl1_dprint(double * data, size_t len){
  * @param data Vektor
  * @param len Länge des Vektors
  */
-void blasl1_iprint(index* data, size_t len){
-    for(size_t i=0;i<len;++i){
-	printf("%g\n",(double) data[i]);
-    }
-}
+void blasl1_iprint(index* data, size_t len);
 
-void blasl1_intprint(index* data, size_t len){
-    for(size_t i=0;i<len;++i){
-	printf("%i\n", data[i]);
-    }
-}
+void blasl1_intprint(index* data, size_t len);
 
 
 #endif //BLAS_LEVEL1_H
