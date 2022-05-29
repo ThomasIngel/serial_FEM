@@ -1,6 +1,7 @@
 // For Testing cg_seriell // test_cg_seriell_v2
 
 #include "hpc.h"
+#include "blas_level1.h"
 #include <math.h>
 
 void print_vec_double(const double* x, size_t n){
@@ -41,6 +42,11 @@ main (void) {
 	sed* S = sed_compress(T);
 	//sed_print(S,0);
 	
+	// create dirichlet bcs
+	double dir[2] = {2.0, 2.0};
+	index dir_ind[2] = {0, (index) n - 1};
+	size_t n_dir = 2;
+	
 	// rhs and x0
 	double b[n];
 	double u[n];
@@ -51,13 +57,13 @@ main (void) {
 		u_jacobi[i] = 0;
 	}
 	
-	cg_seriell(n, S, b, u, 1e-6);
+	cg_seriell(n, S, b, u, 1e-6, dir, dir_ind, n_dir);
 	print_vec_double(u,n);
 
 	printf("\n\n----------JACOBI----------\n");
 	double omega = 2.0 / 3.0;
 	double tol = 1e-6;
-	omega_jacobi(n,S,b,u_jacobi,omega,tol);
+	omega_jacobi(n,S,b,u_jacobi,omega,tol, dir, dir_ind, n_dir);
 	print_vec_double(u_jacobi,n);
 
 	cs_free (T) ;                        /* clear T */
