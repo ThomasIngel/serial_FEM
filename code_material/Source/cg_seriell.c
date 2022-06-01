@@ -10,14 +10,12 @@ cg_seriell(const sed *A, const double *b, double *u, double tol) {
         // u   - inital guess for solution
         // tol - Toleranz (stopping criteria)
 
-        index n = A->n ;                         //Matrix Dim
+        index n = A->n ;                                //Matrix Dim
 
         double r[n];
-        blasl1_dcopy(b,r,n,1.0);         //kopiert b in r (also r=b)
-
+        blasl1_dcopy(b,r,n,1.0);                        //kopiert b in r (also r=b)
 
         // r = b - A*u    r = r-A*u
-        /*TestBeta: sed_spmv_adapt(A,u,r,-1.0,1);             //Ergebnis steht in r */
         sed_spmv_adapt(A,u,r,-1.0);
 
         // sigma = r'*r (Skalarprodukt)
@@ -27,7 +25,6 @@ cg_seriell(const sed *A, const double *b, double *u, double tol) {
         // d = r
         double d[n];
         blasl1_dcopy(r,d,n,1.0);
-
 
         // Speicher allokieren für ad
         double *ad = calloc(n, sizeof(double));         // ad mit 0en initiieren calloc
@@ -47,7 +44,6 @@ cg_seriell(const sed *A, const double *b, double *u, double tol) {
                     }
                 }
                 // ad = A*d (damit nur 1x Matrixprodukt)
-                //TestBeta: sed_spmv_adapt(A,d,ad,1.0,0);
                 sed_spmv_adapt(A,d,ad,1.0);
 
                 // alpha = sigma/(d*ad)
@@ -68,7 +64,6 @@ cg_seriell(const sed *A, const double *b, double *u, double tol) {
 
                 // sigma = sigma_neu
                 sigma = sigma_neu;
-                /* free(ad); */
 
                 printf("k = %d \t norm = %10g\n", k, sqrt(sigma));
 
