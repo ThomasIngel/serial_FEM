@@ -1,21 +1,7 @@
 // cg_seriell Version 27.05.22
 
 #include "hpc.h"
-#include "blas_leel1.h"
-
-void inc_dir_u(double* u, const double* dir, const index* dir_ind, 
-		const index n_dir){
-	for (index i = 0; i < n_dir; ++i){
-		u[dir_ind[i]] = dir[i];
-		printf("dir_ind[%d] = %d\n", i, dir_ind[i]);
-	}		
-}
-
-void inc_dir_r(double* r, const index* dir_ind, const index n_dir){
-	for (index i = 0; i < n_dir; ++i){
-		r[dir_ind[i]] = 0;
-	}
-}
+#include "blas_level1.h"
 
 void
 cg_seriell(const sed *A, const double *b, double *u, double tol,
@@ -30,7 +16,7 @@ cg_seriell(const sed *A, const double *b, double *u, double tol,
 
         index n = A->n ;                                //Matrix Dim
 
-        print_vec(u, n);
+        //print_vec(u, n);
 
         double r[n];
         blasl1_dcopy(b,r,n,1.0);                        //kopiert b in r (also r=b)

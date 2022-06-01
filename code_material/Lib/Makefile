@@ -78,7 +78,8 @@ HPC = \
  omega_jacobi.o \
  sed_sm_build.o \
  mesh_build_rhs.o \
- get_dirich.o
+ get_dirich.o \
+ blas_level1.o
 
 
 $(HPC): ../Include/hpc.h Makefile

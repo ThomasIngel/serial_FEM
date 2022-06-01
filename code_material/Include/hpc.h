@@ -143,7 +143,7 @@ void cg_seriell(const sed* A, const double* b, double* u, double tol,
 	const double* dir, const index* dir_ind, const index n_dir);
 
 //w-Jacobi
-void omega_jacobi(size_t n,const sed *A, const double *b, double *u, double omega, double tol);
+void omega_jacobi(size_t n,const sed *A, const double *b, double *u, double omega, double tol, const double* dir, const index* dir_ind, const index n_dir);
 
 
 double kappa( double x[2], index typ );
