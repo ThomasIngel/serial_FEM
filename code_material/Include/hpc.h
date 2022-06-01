@@ -83,6 +83,9 @@ index sed_gaxpy (const sed *A, const double *x, double *y);
 index sed_dupl (sed *A);
 index sed_gs_constr (const sed *A, const double *b, double *x, double *w, 
                      index *fixed, index nFixed, index forward);
+                     
+sed* sed_sm_pattern(mesh* H);
+sed* sed_sm_build(mesh* H);
 
 mesh *mesh_alloc (index ncoord, index nelem, index nbdry);
 mesh *mesh_free (mesh *M);
@@ -97,6 +100,9 @@ mesh *get_refined_mesh(int norefine);
 index mesh_stima_global(mesh *M, sed *T);
 void mesh_RHS(const mesh* M, double* b, const double (*fV)(double *, index), 
   const double (*fN)(double *, index));
+  
+void mesh_build_rhs(const mesh* M, double* b, double (*fV)(double *, index), 
+		double (*fN)(double *, index));
 
 // usefull functions for lib and stima
 void get_indices_and_points(const index* Elem, const index nc, 
@@ -129,9 +135,12 @@ void hpc_rest(double *x, index *edgeno, index nEdges, double *y, index ny);
 void hpc_prol(double *x, index nx, index *edgeno, index nEdges, double *y);
 void hpc_prol_quad(double *x, double *y, index *elem, index nC, index nT, index nE);
 
+void get_dirich(const mesh* H, double (*f_dir)(double *), double* dir);
+
 // functions for cg
 index sed_spmv_adapt(const sed* A, const double* x, double* y, double alpha);
-void cg_seriell(const sed* A, const double* b, double* u, double tol);
+void cg_seriell(const sed* A, const double* b, double* u, double tol,
+	const double* dir, const index* dir_ind, const index n_dir);
 
 //w-Jacobi
 void omega_jacobi(size_t n,const sed *A, const double *b, double *u, double omega, double tol);

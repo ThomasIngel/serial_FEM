@@ -68,7 +68,7 @@ void rhs_Volumen(double p1[2], double p2[2], double p3[2], index typ,
  * @param[in] fV        Funktion der Volumenkraft f.
  * @param[in] fN        Funktion der Neumann-Randbedingung.
  */
-void mesh_build_rhs(const mesh_transfer *mesh_loc, double *b,
+void mesh_build_rhs(const mesh* H, double *b,
 					double (*fV)(double *, index), double (*fN)(double *, index))
 {
 	// Verschiedene Variablen und Zeiger für die Berechnungen
@@ -76,11 +76,11 @@ void mesh_build_rhs(const mesh_transfer *mesh_loc, double *b,
 	double *Coord_loc, bx[3];
 
 	// Auslesen der Daten vom mesh Objekt
-	nT = mesh_loc->nelem_loc;
-	nB = mesh_loc->nbdry_loc;
-	Coord_loc = mesh_loc->coord;
-	Elem_loc = mesh_loc->elem;
-	Bdry_loc = mesh_loc->bdry_loc;
+	nT = H->nelem;
+	nB = H->nbdry;
+	Coord_loc = H->coord;
+	Elem_loc = H->elem;
+	Bdry_loc = H->bdry;
 
 	// Rechte Seite: Volumenkraft f
 	for (k = 0; k < nT; k++) {

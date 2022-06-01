@@ -75,7 +75,10 @@ HPC = \
  cs_print.o \
  cs_util.o \
  sed_compress.o \
- omega_jacobi.o
+ omega_jacobi.o \
+ sed_sm_build.o \
+ mesh_build_rhs.o \
+ get_dirich.o
 
 
 $(HPC): ../Include/hpc.h Makefile

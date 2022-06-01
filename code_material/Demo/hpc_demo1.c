@@ -14,18 +14,25 @@ double kappa( double x[2], index typ )
 
 double F_vol( double x[2], index typ )
 {
-  return ( 0.0 );
+  return ( 4.0 );
 }
 
 double g_Neu( double x[2], index typ )
 {
-  return ( x[0] * x[1] );
+  //return ( x[0] * x[1] );
+  return 0.0;
 }
 
 double u_D( double x[2])
 {
-//  return ( 0.0 );
-  return ( x[0] * x[1] );
+  return ( 0.0);
+  //return ( x[0] * x[1] );
+}
+
+void print_vec(double* x, index n){
+	for (index i = 0; i < n; ++i){
+		printf("x[%d] = %f\n", i, x[i]);
+	}
 }
 
 
@@ -81,6 +88,7 @@ int main (int argc, char **argv)
     w = calloc (n, sizeof(double));       /* get temporary workspace */
     b = calloc (n, sizeof(double));       /* get workspace for rhs*/
     mesh_buildRhs(H[N], b, F_vol, g_Neu); /* build rhs (volume and Neumann data */
+    print_vec(b, n);
     TIME_SAVE(2);
     
     /* incorporate Dirichlet data */
@@ -106,7 +114,7 @@ int main (int argc, char **argv)
     cnt = hpc_mg(A, b, x, 1e-10, 50, H, N, 2, 2, 1);  
     TIME_SAVE(4);
                                    
-    for (k=0; k<HPC_MIN(10,A[N]->n); k++){ printf(" x[%g] = %g\n",(double) k, x[k]);}
+    for (k=0; k<HPC_MIN(25,A[N]->n); k++){ printf(" x[%g] = %g\n",(double) k, x[k]);}
      
     printf("\n");
     printf("Time load & create hierarchy = %9i ns\n", (int) TIME_ELAPSED(0,1));
