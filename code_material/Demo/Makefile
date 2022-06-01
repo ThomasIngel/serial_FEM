@@ -17,8 +17,8 @@ LDLIBS += -lm
 CS = $(LDFLAGS) ../Lib/libhpc.a $(LDLIBS)
 
 all: lib hpc_demo1 hpc_demo2 
-	- ./hpc_demo1 problem1 2
-	- ./hpc_demo1 problem1 4
+	- ./hpc_demo1 problem1 1
+#	- ./hpc_demo1 problem1 4
 
 
 lib:

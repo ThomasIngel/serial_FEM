@@ -84,9 +84,9 @@ void mesh_trans_print (mesh_trans** metra, index domain);
 void mesh_buildRhs_loc(const mesh_trans *M, double *b, double (*fV)(double *, index),
                    double (*fN)(double *, index));
 
-sed *sed_sm_pattern(mesh_trans *mesh_loc);
+//sed *sed_sm_pattern(mesh_trans *mesh_loc);
 void sed_sm_element(double p1[2], double p2[2], double p3[2], double dx[3], double ax[3]);
-sed *sed_sm_build(mesh_trans *mesh_loc);
+//sed *sed_sm_build(mesh_trans *mesh_loc);
 
 
 

@@ -16,7 +16,7 @@
  *
  * @return Zurückgeben einer allokierten SED Matrix.
  */
-sed *sed_sm_pattern(mesh_trans *mesh_loc)
+sed *sed_sm_pattern(mesh* H)
 {
 	// Verschiedene Variablen und Zeiger für die Berechnungen
 	index k, j, n, p, nC, nT, nE, nz, *Elem, ind[3], *Si, *w, imin, imax;
@@ -26,9 +26,9 @@ sed *sed_sm_pattern(mesh_trans *mesh_loc)
 	static int ai[3] = {0, 0, 1}, aj[9] = {1, 2, 2};
 
 	// Auslesen der Daten vom mesh_trans Objekt
-	nT = mesh_loc->nelem_loc;
-	nC = mesh_loc->ncoord_loc;
-	Elem = mesh_loc->domelem;
+	nT = H->nelem;
+	nC = H->ncoord;
+	Elem = H->elem;
 
 	// get structure of sparse matrix
 	n = nC; // Dimension der Steifigkeitsmatrix
@@ -130,7 +130,7 @@ void sed_sm_element(double p1[2], double p2[2], double p3[2], double dx[3], doub
  *
  * @return Zurückgeben einer allokierten gefüllten SED Matrix.
  */
-sed *sed_sm_build(mesh_trans *mesh_loc)
+sed *sed_sm_build(mesh* H)
 {
 	// Verschiedene Variablen und Zeiger für die Berechnungen
 	index j, k, n, p, nC, nT, nz, *Elem, ind[3], *Ai, *w, imin, imax;
@@ -142,13 +142,13 @@ sed *sed_sm_build(mesh_trans *mesh_loc)
 	static int ai[3] = {0, 0, 1}, aj[9] = {1, 2, 2};
 
 	// Auslesen der Daten vom mesh Objekt
-	nT = mesh_loc->nelem_loc;
-	nC = mesh_loc->ncoord_loc;
-	Coord = mesh_loc->domcoord;
-	Elem = mesh_loc->domelem;
+	nT = H->nelem;
+	nC = H->ncoord;
+	Coord = H->coord;
+	Elem = H->elem;
 
 	// Auslesen der Daten vom sed Objekt und Speicher anlegen für die Matrixwerte
-	A = sed_sm_pattern(mesh_loc);
+	A = sed_sm_pattern(H);
 	n = A->n;
 	Ai = A->i;
 	if (!(A->x)) {
