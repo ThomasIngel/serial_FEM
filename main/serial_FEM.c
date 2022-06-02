@@ -20,8 +20,8 @@ double g_Neu( double x[2], index typ )
 
 double u_D( double x[2])
 {
-  return ( 0.0 );
-  return ( x[0] + x[1] );
+  return ( 2.0 );
+  //return ( x[0] + x[1] );
 }
 
 double vec1_norm(const double* x, const double* y, const size_t n){
@@ -55,25 +55,24 @@ void print_vec2_i(const double* x, const double* y, size_t n){
 }
 
 int main() {
-	// inital mesh
+	// get mesh and stima
     mesh* H = get_refined_mesh(1);
     sed* A;
     
    	A = sed_sm_build(H);
-   	sed_print(A,0);
+   	//sed_print(A,0);
    	
    	index n = A->n;
    	
+   	// get RHS
    	double* b_cg = calloc(n, sizeof(double));
    	double* b_jac = calloc(n, sizeof(double));
-   	
    	mesh_build_rhs(H, b_cg, F_vol, g_Neu);
    	mesh_build_rhs(H, b_jac, F_vol, g_Neu);
    	
-   	printf("b wo dir = \n");
-   	print_vec(b_cg, n);
    	
-   	// get dirichlet bcs
+   	// get number of dirichlet bcs (because of the midpoints in the mesh we 
+   	// don't need 
    	index n_dir = 0;
    	for (index i = 0; i < H->nfixed; ++i){
    		if (H->fixed[i] >= H->ncoord){
@@ -82,33 +81,36 @@ int main() {
    		n_dir++;
    	}
    	
+   	// get dirichle boundary values and indices
    	double dir[n_dir];
    	get_dirich(H, u_D, dir);
-   	
    	index* dir_ind = H->fixed;
    	
+   	// initialize solution vector with 0
    	double* u_cg = calloc(n, sizeof(double));
    	double* u_jac = calloc(n, sizeof(double));
    	
+   	// get dirichlet bcs for the homogenization
    	for (index i = 0; i < n_dir; ++i){
    		u_cg[dir_ind[i]] = dir[i];
    		u_jac[dir_ind[i]] = dir[i];
    	}
    	
-   	print_vec(u_cg, n);
+   	// homogenitize RHS
    	sed_spmv_adapt(A, u_cg, b_cg, -1.0);
    	sed_spmv_adapt(A, u_jac, b_jac, -1.0);
    	
-   	printf("b_cg = \n");
-   	print_vec(b_cg,n);
+   	// solve with cg
    	cg_seriell(A, b_cg, u_cg, 1e-6, dir, dir_ind, n_dir);
-   	print_vec(u_cg,n);
-   	printf("-----------------\n");
+
+	// solve with \omega-jacobi
+   	omega_jacobi(n, A, b_jac, u_jac, 2.0 / 3.0, 1e-15, dir, dir_ind, n_dir);
    	
+   	// print solution
+   	printf("cg_dir_neu \t \t jacobi_dir_neu\n");
+   	print_vec2(u_cg, u_jac, n);
    	
-   	omega_jacobi(n, A, b_jac, u_jac, 2.0 / 3.0, 1e-6, dir, dir_ind, n_dir);
-   	print_vec(u_jac, n);
-   	
+   	// free allocated memory
    	free(b_cg);
    	free(b_jac);
    	free(u_cg);
