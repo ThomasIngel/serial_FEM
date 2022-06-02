@@ -11,8 +11,8 @@ cg_seriell(const sed *A, const double *b, double *u, double tol,
         // u   - inital guess for solution
         // tol - Toleranz (stopping criteria)
         
-        // incoporate dirichlet bcs into u
-        inc_dir_u(u, dir, dir_ind, n_dir);
+        // set u at dirichlet bcs to 0 because of the homogenication
+        inc_dir_r(u, dir_ind, n_dir);
 
         index n = A->n ;                                //Matrix Dim
 
@@ -59,9 +59,14 @@ cg_seriell(const sed *A, const double *b, double *u, double tol,
 
                 // Update: u = u + alpha*d
                 blasl1_daxpy(u, d, n, alpha, 1.0);
+                
+                // set u at dirichlet bcs to 0 because of the homogenication
+                inc_dir_r(u, dir_ind, n_dir);
 
                 // r = r - alpha*ad
                 blasl1_daxpy(r, ad, n, -alpha, 1.0);
+                
+                // ressiduum at dirichlet node is 0
                 inc_dir_r(r, dir_ind, n_dir);
 
                 // sigma_neu = r' * r
@@ -77,4 +82,7 @@ cg_seriell(const sed *A, const double *b, double *u, double tol,
 
         } while (sqrt(sigma) > tol);
         free(ad);
+        
+        // write dirichlet data at dirichlet nodes
+        inc_dir_u(u, dir, dir_ind, n_dir);
 }
