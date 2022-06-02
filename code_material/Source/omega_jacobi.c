@@ -13,8 +13,8 @@ omega_jacobi(size_t n,
         // omega - often 2/3
         // tol   - Toleranz (stopping criteria)
         
-        // incoporate dirichlet bcs into u0
-        inc_dir_u(u, dir, dir_ind, n_dir);
+        // set u at dirichlet bcs to 0 because of the homogenication
+        inc_dir_r(u, dir_ind, n_dir);
 
         double *Ax = A->x; // data of the matrix A
 
@@ -30,6 +30,8 @@ omega_jacobi(size_t n,
 
         // r = b - A*u , calculating the residuum
         sed_spmv_adapt(A,u,r,-1.0);             //Solution in vector r
+        
+        // residuum is zero at dirichlet nodes
         inc_dir_r(r, dir_ind, n_dir);
 
         // sigma = r'*r = sigma_0 , computing the scalarproduct
@@ -49,12 +51,16 @@ omega_jacobi(size_t n,
                 }
                 
                 blasl1_daxpy(u,r,n,omega,1.0); // u <- u + r * omega
-
+                
+                // set dirichlet nodes to 0 because of the homogenization
+                inc_dir_r(u, dir_ind, n_dir);
 
                 blasl1_dcopy(b,r,(index) n,1.);  //copy b in r (r=b)
 
                 // r = b - A*u , calculating the residuum
                 sed_spmv_adapt(A,u,r,-1.0);
+                
+                // residuum is 0 at dirichlet nodes
                 inc_dir_r(r, dir_ind, n_dir);
 
                 // sigma = r' * r , computing the scalarproduct with the new residuum
@@ -67,4 +73,6 @@ omega_jacobi(size_t n,
                 printf("k = %d \t norm = %10g\n", k, sqrt(sigma));
         } while (sigma > tol*tol*sigma_0);
         
+        // write dirichlet data in solution vector
+        inc_dir_u(u, dir, dir_ind, n_dir);
 }
