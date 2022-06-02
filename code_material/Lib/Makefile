@@ -79,7 +79,8 @@ HPC = \
  sed_sm_build.o \
  mesh_build_rhs.o \
  get_dirich.o \
- blas_level1.o
+ blas_level1.o \
+ inc_dir.o
 
 
 $(HPC): ../Include/hpc.h Makefile
