@@ -144,10 +144,6 @@ void cg_seriell(const sed* A, const double* b, double* u, double tol, const doub
 //w-Jacobi
 void omega_jacobi(size_t n,const sed *A, const double *b, double *u, double omega, double tol, const double* dir, const index* dir_ind, const index n_dir);
 
-// inc_dir
-void inc_dir_r(double* r, const index* dir_ind, const size_t n_dir);
-void inc_dir_u(double* u, const double* dir, const index* dir_ind, const size_t n_dir);
-
 double kappa( double x[2], index typ );
 double F_vol( double x[2], index typ );
 
