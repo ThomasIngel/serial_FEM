@@ -78,7 +78,7 @@ cg_seriell(const sed *A, const double *b, double *u, double tol,
                 // sigma = sigma_neu
                 sigma = sigma_neu;
 
-                printf("k = %d \t norm = %10g\n", k, sqrt(sigma));
+                // printf("k = %d \t norm = %10g\n", k, sqrt(sigma));
 
         } while (sqrt(sigma) > tol);
         free(ad);

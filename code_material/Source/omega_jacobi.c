@@ -70,7 +70,7 @@ omega_jacobi(size_t n,
 
                 // Oben bei for, stimmt das oder brauche ich pointer??
                
-                printf("k = %d \t norm = %10g\n", k, sqrt(sigma));
+                // printf("k = %d \t norm = %10g\n", k, sqrt(sigma));
         } while (sigma > tol*tol*sigma_0);
         
         // write dirichlet data in solution vector

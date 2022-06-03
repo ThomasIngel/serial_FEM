@@ -1,5 +1,8 @@
 #include "hpc.h"
 #include "blas_level1.h"
+#include <errno.h>  // for errno
+#include <limits.h> // for INT_MIN and INT_MAX
+#include <string.h>  // for strlen
 
 // these are the functions for the boundarys, volume force etc.
 double kappa( double x[2], index typ )
@@ -54,9 +57,31 @@ void print_vec2_i(const double* x, const double* y, size_t n){
 	}
 }
 
-int main() {
+int main(int argc, char** argv) {
+
+    if (strlen(argv[1]) == 0) {
+		printf("ERROR WITH REFINEMENT INPUT! ABORTING...\n");
+        return 1; // empty string
+    }
+    char* p;
+    errno = 0; // not 'int errno', because the '#include' already defined it
+    long arg = strtol(argv[1], &p, 10);
+    if (*p != '\0' || errno != 0) {
+		printf("ERROR WITH REFINEMENT INPUT! ABORTING...\n");
+        return 1; // In main(), returning non-zero means failure
+    }
+
+    if (arg < INT_MIN || arg > INT_MAX) {
+		printf("ERROR WITH REFINEMENT INPUT! ABORTING...\n");
+        return 1;
+    }
+    int norefine = arg;
+
+    // Everything went well
+    printf("Starting program with %d mesh refinement(s)!\n", norefine);
+
 	// get mesh and stima
-    mesh* H = get_refined_mesh(1);
+    mesh* H = get_refined_mesh(norefine);
     sed* A;
     
    	A = sed_sm_build(H);
