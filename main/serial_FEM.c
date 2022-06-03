@@ -89,11 +89,11 @@ int main(int argc, char** argv) {
     // Everything went well
     printf("Starting program with %d mesh refinement(s) on %d processes!\n", norefine,numprocs);
 	
-
 	// get mesh and stima
     mesh* H = get_refined_mesh(norefine);
     sed* A;
     
+	printf("\nSM");
    	A = sed_sm_build(H);
    	//sed_print(A,0);
    	

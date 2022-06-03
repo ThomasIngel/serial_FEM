@@ -8,7 +8,7 @@ mesh *get_refined_mesh(int norefine){
     mesh* H;
 
     I = malloc (sizeof(mesh));
-    char *fname = "../code_material/Iroblem/problem1";
+    char *fname = "../code_material/Problem/problem1";
     I = mesh_load(fname);   
     mesh_getEdge2no(I->nelem, I->elem, &I->nedges, &I->edge2no);
     I->fixed = mesh_getFixed(I->ncoord, I->bdry, I->nbdry, &I->nfixed);
