@@ -93,7 +93,6 @@ int main(int argc, char** argv) {
     mesh* H = get_refined_mesh(norefine);
     sed* A;
     
-	printf("\nSM");
    	A = sed_sm_build(H);
    	//sed_print(A,0);
    	
