@@ -87,7 +87,8 @@ int main(int argc, char** argv) {
     int norefine = arg;
 
     // Everything went well
-    printf("Starting program with %d mesh refinement(s)!\n", norefine);
+    printf("Starting program with %d mesh refinement(s) on %d processes!\n", norefine,numprocs);
+	
 
 	// get mesh and stima
     mesh* H = get_refined_mesh(norefine);

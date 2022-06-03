@@ -10,13 +10,16 @@
 #export MYAPP=/home/ouk35/hpc2/w01/01_pacioli/a.out
 export MYAPP=/home/kabis/HPC_II/Project/serial_FEM/main/serial_FEM
 # aufruf in MYAPP verschieben?
-export MYAPP_FLAGS='1' 
+
+# ANZAHL DER REFINEMENTS
+export MYAPP_FLAGS='1'  
 
 # ---------------------------
 # set the name of the job
 #$ -N MVAPICH2_JOB 
 
 # request between 2 and 8 slots
+# ANZAHL DER PROZESSE
 #$ -pe mvapich 1
 #$ -l h_rt=00:05:00
 
