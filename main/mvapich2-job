@@ -1,0 +1,73 @@
+#!/bin/bash
+#
+# Script to submit an mpi job
+
+# ----------------------------
+# Replace these with the name of the executable 
+# and the parameters it needs
+#$ -S /bin/bash
+
+#export MYAPP=/home/ouk35/hpc2/w01/01_pacioli/a.out
+export MYAPP=/home/kabis/HPC_II/Project/serial_FEM/main/serial_FEM
+# aufruf in MYAPP verschieben?
+export MYAPP_FLAGS='1' 
+
+# ---------------------------
+# set the name of the job
+#$ -N MVAPICH2_JOB 
+
+# request between 2 and 8 slots
+#$ -pe mvapich 1
+#$ -l h_rt=00:05:00
+
+
+#################################################################
+#################################################################
+# there shouldn't be a need to change anything below this line
+
+export MPICH_PROCESS_GROUP=no
+
+
+# ---------------------------
+# set up the mpich version to use
+# ---------------------------
+# load the module
+. /etc/profile.d/modules.sh
+module load sge
+# module load mvapich2/open64/64/2.1
+module load mvapich2/gcc/64/2.1
+# module load mvapich2/gcc/64/1.2 # org
+# module load mvapich2/intel/64/1.2
+# module load mvapich2/psc/64/1.2
+# module load mvapich2/pgi/64/1.2
+
+
+#----------------------------
+# set up the parameters for qsub
+# ---------------------------
+
+#  Mail to user at beginning/end/abort/on suspension
+#$ -m beas
+#  By default, mail is sent to the submitting user 
+#  Use  $ -M username    to direct mail to another userid 
+
+# Execute the job from the current working directory
+# Job output will appear in this directory
+#$ -cwd
+#   can use -o dirname to redirect stdout 
+#   can use -e dirname to redirect stderr
+
+#  Export these environment variables
+
+
+# Gridengine allocates the max number of free slots and sets the
+# variable $NSLOTS.
+echo "Got $NSLOTS slots."
+
+# ---------------------------
+# run the job
+# ---------------------------
+echo "Will run command: mpirun_rsh -np $NSLOTS -machinefile $TMPDIR/machines  $MYAPP $MYAPP_FLAGS" 
+
+cm-launcher mpirun_rsh -np $NSLOTS -hostfile $TMPDIR/machines  $MYAPP $MYAPP_FLAGS
+

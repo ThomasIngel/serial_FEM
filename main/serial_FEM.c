@@ -3,6 +3,7 @@
 #include <errno.h>  // for errno
 #include <limits.h> // for INT_MIN and INT_MAX
 #include <string.h>  // for strlen
+#include <mpi.h>
 
 // these are the functions for the boundarys, volume force etc.
 double kappa( double x[2], index typ )
@@ -58,6 +59,14 @@ void print_vec2_i(const double* x, const double* y, size_t n){
 }
 
 int main(int argc, char** argv) {
+
+	int numprocs;
+	int myid;
+	MPI_Status stat;
+
+  	MPI_Init(&argc,&argv);
+	MPI_Comm_size(MPI_COMM_WORLD,&numprocs); /* find out how big the SPMD world is */
+	MPI_Comm_rank(MPI_COMM_WORLD,&myid); /* and this processes' rank is */
 
     if (strlen(argv[1]) == 0) {
 		printf("ERROR WITH REFINEMENT INPUT! ABORTING...\n");
@@ -140,4 +149,7 @@ int main(int argc, char** argv) {
    	free(b_jac);
    	free(u_cg);
    	free(u_jac);
+
+	MPI_Finalize();
+  	return 0;
 }
