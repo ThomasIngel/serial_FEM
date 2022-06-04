@@ -17,9 +17,15 @@ omega_jacobi(size_t n,
         inc_dir_r(u, dir_ind, n_dir);
 
         double *Ax = A->x; // data of the matrix A
-
-        double diag[n];
-        blasl1_dcopy(Ax,diag,(index) n,1.); // the diagonal of A is now in vector diag_inv
+	
+		// calculate omega * inv(D)^-1 for permormance
+        double omega_inv_diag[n];
+        for (index i = 0; i < n; ++i){
+        	omega_inv_diag[i] = omega / Ax[i];
+        }
+        
+        //blasl1_dcopy(Ax,diag,(index) n,1.); 
+        // the diagonal of A is now in vector diag_inv
         
         /*// For later calculation purposes
         double tmp[n];
@@ -47,10 +53,11 @@ omega_jacobi(size_t n,
 
                 // u_k := u_k-1 + omega * diag(A)^-1 * r
                 for(index i =0;i<n;i++){
-                        r[i] = r[i] / diag[i]; // compute D^-1 * r and save it in r
+                	// compute D^-1 * r and save it in r
+                    u[i] += r[i] * omega_inv_diag[i]; 
                 }
                 
-                blasl1_daxpy(u,r,n,omega,1.0); // u <- u + r * omega
+                //blasl1_daxpy(u,r,n,omega,1.0); // u <- u + r * omega
                 
                 // set dirichlet nodes to 0 because of the homogenization
                 inc_dir_r(u, dir_ind, n_dir);
