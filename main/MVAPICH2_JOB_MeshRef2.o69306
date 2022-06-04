@@ -1,0 +1,35 @@
+Got 1 slots.
+Will run command: mpirun_rsh -np 1 -machinefile /tmp/69306.1.xeon_e5-2630_2x6.q/machines  /home/reginaba/hpc2/Projekt/self_Regina/BenchenTest/serial_FEM_branchPacioli_benchTest/main/serial_FEM 2
+Starting program with 2 mesh refinement(s) on 1 processes!
+Load coordinates from ../code_material/Problem/problem1.co
+Load elements from ../code_material/Problem/problem1.el
+Load boundary data from ../code_material/Problem/problem1.bd
+Time to build stiffness matrix & righthandside in sec: 0.000000
+Time for cg-Solver in sec: 0.000000
+Time for omega-Jacobi-Solver in sec: 0.000000
+cg_dir_neu               jacobi_dir_neu
+x[0] =          2                y[0] =          2
+x[1] =          2                y[1] =          2
+x[2] =    2.30132                y[2] =    2.30132
+x[3] =          2                y[3] =          2
+x[4] =          2                y[4] =          2
+x[5] =    2.22917                y[5] =    2.22917
+x[6] =    2.18007                y[6] =    2.18007
+x[7] =    2.22917                y[7] =    2.22917
+x[8] =          2                y[8] =          2
+x[9] =          2                y[9] =          2
+x[10] =          2               y[10] =          2
+x[11] =    2.13925               y[11] =    2.13925
+x[12] =    2.28048               y[12] =    2.28048
+x[13] =    2.07146               y[13] =    2.07146
+x[14] =    2.26448               y[14] =    2.26448
+x[15] =    2.28048               y[15] =    2.28048
+x[16] =    2.13925               y[16] =    2.13925
+x[17] =          2               y[17] =          2
+x[18] =          2               y[18] =          2
+x[19] =    2.11167               y[19] =    2.11167
+x[20] =    2.13266               y[20] =    2.13266
+x[21] =    2.21722               y[21] =    2.21722
+x[22] =    2.11167               y[22] =    2.11167
+x[23] =    2.21722               y[23] =    2.21722
+x[24] =    2.13266               y[24] =    2.13266
