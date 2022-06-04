@@ -3,7 +3,6 @@
 #include <errno.h>  // for errno
 #include <limits.h> // for INT_MIN and INT_MAX
 #include <string.h>  // for strlen
-#include <mpi.h>
 #include <stdlib.h> // for Time Bench
 #include <sys/times.h>
 #include <unistd.h>
@@ -75,15 +74,6 @@ double walltime() {
 //
 
 int main(int argc, char** argv) {
-
-        int numprocs;
-        int myid;
-        MPI_Status stat;
-
-        MPI_Init(&argc,&argv);
-        MPI_Comm_size(MPI_COMM_WORLD,&numprocs); /* find out how big the SPMD world is */
-        MPI_Comm_rank(MPI_COMM_WORLD,&myid); /* and this processes' rank is */
-
         if (strlen(argv[1]) == 0) {
                 printf("ERROR WITH REFINEMENT INPUT! ABORTING...\n");
                 return 1; // empty string
@@ -103,7 +93,7 @@ int main(int argc, char** argv) {
         int norefine = arg;
 
         // Everything went well
-        printf("Starting program with %d mesh refinement(s) on %d processes!\n", norefine,numprocs);
+        printf("Starting program with %d mesh refinement(s)\n", norefine);
 
         // Time
         double t0;
@@ -187,6 +177,5 @@ int main(int argc, char** argv) {
         free(u_cg);
         free(u_jac);
 
-        MPI_Finalize();
         return 0;
 }
