@@ -178,8 +178,8 @@ int main(int argc, char** argv) {
         printf("Time for omega-Jacobi-Solver in sec: %4lf\n", t_jac);      // Time print
 
         // print solution
-        printf("cg_dir_neu \t \t jacobi_dir_neu\n");
-        print_vec2(u_cg, u_jac, n);
+        //printf("cg_dir_neu \t \t jacobi_dir_neu\n");
+        //print_vec2(u_cg, u_jac, n);
 
         // free allocated memory
         free(b_cg);
