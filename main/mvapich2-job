@@ -8,7 +8,8 @@
 #$ -S /bin/bash
 
 #export MYAPP=/home/ouk35/hpc2/w01/01_pacioli/a.out
-export MYAPP=/home/kabis/HPC_II/Project/serial_FEM/main/serial_FEM      # adjust!!
+#export MYAPP=/home/kabis/HPC_II/Project/serial_FEM/main/serial_FEM      # adjust!!
+export MYAPP=/home/ti/01_HPC2/01_remove_MPI/serial_FEM/main/serial_FEM
 # aufruf in MYAPP verschieben?
 
 # ANZAHL DER REFINEMENTS
@@ -16,11 +17,10 @@ export MYAPP_FLAGS='1'
 
 # ---------------------------
 # set the name of the job
-#$ -N MVAPICH2_JOB_MeshRef1 
+#$ -N serial_MeshRef$MYAPP_FLAGS
 
 # request between 2 and 8 slots
 # ANZAHL DER PROZESSE
-#$ -pe mvapich 1
 #$ -l h_rt=00:05:00
 
 
@@ -70,7 +70,7 @@ echo "Got $NSLOTS slots."
 # ---------------------------
 # run the job
 # ---------------------------
-echo "Will run command: mpirun_rsh -np $NSLOTS -machinefile $TMPDIR/machines  $MYAPP $MYAPP_FLAGS" 
+echo "$MYAPP $MYAPP_FLAGS" 
 
-cm-launcher mpirun_rsh -np $NSLOTS -hostfile $TMPDIR/machines  $MYAPP $MYAPP_FLAGS
+$MYAPP $MYAPP_FLAGS
 
