@@ -17,7 +17,7 @@ export MYAPP_FLAGS='1'
 
 # ---------------------------
 # set the name of the job
-#$ -N serial_MeshRef$MYAPP_FLAGS
+#$ -N serial_MeshRef1
 
 # request between 2 and 8 slots
 # ANZAHL DER PROZESSE
