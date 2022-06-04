@@ -165,13 +165,15 @@ int main(int argc, char** argv) {
 
         t0 = walltime();                                        // Time start
 
+        double tol = 1e-6;
+
         // solve with cg
-        cg_seriell(A, b_cg, u_cg, 1e-6, dir, dir_ind, n_dir);
+        cg_seriell(A, b_cg, u_cg, tol, dir, dir_ind, n_dir);
         t_cg = walltime()-t0;                                   // Time stop
         printf("Time for cg-Solver in sec: %4lf\n", t_cg);      // Time print
 
         // solve with \omega-jacobi
-        omega_jacobi(n, A, b_jac, u_jac, 2.0 / 3.0, 1e-15, dir, dir_ind, n_dir);
+        omega_jacobi(n, A, b_jac, u_jac, 2.0 / 3.0, tol, dir, dir_ind, n_dir);
         t_jac = walltime()-t0;                                   // Time stop
         printf("Time for omega-Jacobi-Solver in sec: %4lf\n", t_jac);      // Time print
 
