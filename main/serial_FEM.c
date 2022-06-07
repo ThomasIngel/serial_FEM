@@ -21,13 +21,11 @@ double F_vol( double x[2], index typ )
 double g_Neu( double x[2], index typ )
 {
         return 0.0;
-  //return ( x[0] * x[1] );
 }
 
 double u_D( double x[2])
 {
-  return ( 2.0 );
-  //return ( x[0] + x[1] );
+        return ( 2.0 );
 }
 
 double vec1_norm(const double* x, const double* y, const size_t n){
@@ -71,7 +69,7 @@ double walltime() {
     /* times returns the number of real time ticks passed since start */
     return (double) times(&timebuf) / ticks_per_second;
 }
-//
+
 
 int main(int argc, char** argv) {
         if (strlen(argv[1]) == 0) {
@@ -106,7 +104,6 @@ int main(int argc, char** argv) {
         sed* A;
 
         A = sed_sm_build(H);
-        //sed_print(A,0);
 
         index n = A->n;
 
@@ -118,7 +115,7 @@ int main(int argc, char** argv) {
 
 
         // get number of dirichlet bcs (because of the midpoints in the mesh we
-        // don't need
+        // don't need)
         index n_dir = 0;
         for (index i = 0; i < H->nfixed; ++i){
                 if (H->fixed[i] >= H->ncoord){

@@ -4,6 +4,7 @@
 
 void mesh_trans_print (mesh_trans** metra, index domain)
 {
+// Printet relevante mesh_trans Parameter
 printf("\n------ Mesh of domain %td -----\n", domain);
 printf("\nncoord_glob (# Koordinaten global) = %td", metra[domain]->ncoord_glo);
 printf("\nncoord_loc (# Koordinaten lokal) = %td", metra[domain]->ncoord_loc);
