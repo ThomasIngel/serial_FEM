@@ -1,7 +1,7 @@
-// omega Jacobi algorithm
-
 #include "hpc.h"
 #include "blas_level1.h"
+
+// Serieller omega_jacobi solver
 
 void
 omega_jacobi(size_t n,
@@ -25,12 +25,7 @@ omega_jacobi(size_t n,
         }
         
         //blasl1_dcopy(Ax,diag,(index) n,1.); 
-        // the diagonal of A is now in vector diag_inv
-        
-        /*// For later calculation purposes
-        double tmp[n];
-		*/
-		
+        // the diagonal of A is now in vector diag_inv	
         double r[n];
         blasl1_dcopy(b,r,(index) n,1.);         //copy b in r (r=b)
 
@@ -73,11 +68,6 @@ omega_jacobi(size_t n,
                 // sigma = r' * r , computing the scalarproduct with the new residuum
                 sigma = blasl1_ddot(r,r,n);
 
-                // Muss ich irgendwas free()?
-
-                // Oben bei for, stimmt das oder brauche ich pointer??
-               
-                // printf("k = %d \t norm = %10g\n", k, sqrt(sigma));
         } while (sigma > tol*tol*sigma_0);
         
         // write dirichlet data in solution vector
